@@ -158,10 +158,10 @@ yesBtn.addEventListener("click", () => {
   modal.style.display = "flex";
   music.play();
 
-  const end = Date.now() + 7500;
+  const end = Date.now() + 9500;
   (function fire() {
     confetti({
-      particleCount: 8,
+      particleCount:10,
       spread: 80,
       origin: { x: Math.random(), y: Math.random() }
     });
