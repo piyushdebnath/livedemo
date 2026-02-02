@@ -1,196 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Will You Be My Valentine?</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
-  <!-- Fireworks -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- Fireworks -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: radial-gradient(circle at top, #2b2e4a, #12121c);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', sans-serif;
-      overflow: hidden;
-      color: #fff;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    /* Card */
-    .card {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      padding: 50px 60px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-      text-align: center;
-      max-width: 420px;
-    }
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  color: #f8fafc;
+  overflow: hidden;
+}
 
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.4rem;
-      margin-bottom: 40px;
-      color: #f5d38e;
-    }
+/* Card */
+.card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px 50px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+  width: 90%;
+  max-width: 420px;
+}
 
-    .buttons {
-      position: relative;
-      height: 140px;
-    }
+.card h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.3rem;
+  margin-bottom: 35px;
+  color: #facc15;
+}
 
-    button {
-      padding: 14px 34px;
-      font-size: 1rem;
-      border-radius: 40px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+/* Buttons */
+.buttons {
+  position: relative;
+  height: 120px;
+}
 
-    #yesBtn {
-      background: linear-gradient(135deg, #f5d38e, #e6b566);
-      color: #1a1a1a;
-      font-weight: 600;
-      box-shadow: 0 12px 30px rgba(245,211,142,0.4);
-    }
+button {
+  padding: 14px 34px;
+  font-size: 1rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
 
-    #yesBtn:hover {
-      transform: scale(1.1);
-    }
+#yesBtn {
+  background: linear-gradient(135deg, #facc15, #fde047);
+  color: #1e293b;
+  font-weight: 600;
+}
 
-    #noBtn {
-      position: absolute;
-      background: #2b2e4a;
-      color: #fff;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    }
+#yesBtn:hover {
+  transform: scale(1.08);
+}
 
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-    }
+#noBtn {
+  position: absolute;
+  left: 55%;
+  top: 0;
+  background: #334155;
+  color: white;
+}
 
-    .modal-content {
-      background: #1f2235;
-      padding: 25px;
-      border-radius: 18px;
-      text-align: center;
-      animation: pop 0.4s ease;
-    }
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
 
-    .modal-content img {
-      max-width: 300px;
-      border-radius: 14px;
-    }
+.modal-content {
+  background: #020617;
+  padding: 25px;
+  border-radius: 18px;
+  text-align: center;
+  animation: pop 0.3s ease;
+}
 
-    .modal-content h2 {
-      margin-top: 15px;
-      font-family: 'Playfair Display', serif;
-      color: #f5d38e;
-    }
+.modal-content img {
+  width: 280px;
+  border-radius: 14px;
+}
 
-    .mute-btn {
-      margin-top: 12px;
-      padding: 8px 18px;
-      border-radius: 20px;
-      background: #f5d38e;
-      color: #1a1a1a;
-      border: none;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
+.modal-content h2 {
+  margin-top: 15px;
+  font-family: 'Playfair Display', serif;
+  color: #facc15;
+}
 
-    @keyframes pop {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-  </style>
+.mute-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: #facc15;
+  color: #020617;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Music -->
-  <audio id="music" loop>
-    <source src="kal.mp3" type="audio/mpeg">
-  </audio>
+<!-- Music -->
+<audio id="music" loop>
+  <source src="kal.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- Card -->
-  <div class="card">
-    <h1>Will you be my Valentine,<br>Pranoti?</h1>
+<!-- Card -->
+<div class="card">
+  <h1>Will you be my Valentine,<br>Pranoti?</h1>
 
-    <div class="buttons">
-      <button id="yesBtn">Yes ❤️</button>
-      <button id="noBtn">No</button>
-    </div>
+  <div class="buttons">
+    <button id="yesBtn">Yes ❤️</button>
+    <button id="noBtn">No</button>
   </div>
+</div>
 
-  <!-- Modal -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <img src="love.jpg" alt="Love">
-      <h2>You chose wisely 💛</h2>
-      <button class="mute-btn" id="muteBtn">Mute Music 🔊</button>
-    </div>
+<!-- Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <img src="love.jpg" alt="Love">
+    <h2>You made me very happy 💛</h2>
+    <button class="mute-btn" id="muteBtn">Mute Music 🔊</button>
   </div>
+</div>
 
-  <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const modal = document.getElementById("modal");
-    const music = document.getElementById("music");
-    const muteBtn = document.getElementById("muteBtn");
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const modal = document.getElementById("modal");
+const music = document.getElementById("music");
+const muteBtn = document.getElementById("muteBtn");
 
-    // Make NO button impossible to click
-    document.addEventListener("mousemove", (e) => {
-      const rect = noBtn.getBoundingClientRect();
-      const distance = Math.hypot(
-        e.clientX - (rect.left + rect.width / 2),
-        e.clientY - (rect.top + rect.height / 2)
-      );
+/* NO button escapes BEFORE hover */
+noBtn.addEventListener("mouseenter", () => {
+  const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
 
-      if (distance < 120) {
-        const x = Math.random() * (window.innerWidth - rect.width);
-        const y = Math.random() * (window.innerHeight - rect.height);
-        noBtn.style.left = `${x}px`;
-        noBtn.style.top = `${y}px`;
-      }
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+});
+
+/* YES button */
+yesBtn.addEventListener("click", () => {
+  modal.style.display = "flex";
+  music.play();
+
+  // Fireworks
+  const end = Date.now() + 2000;
+  (function shoot() {
+    confetti({
+      particleCount: 6,
+      spread: 70,
+      origin: { x: Math.random(), y: Math.random() }
     });
+    if (Date.now() < end) requestAnimationFrame(shoot);
+  })();
+});
 
-    // YES button
-    yesBtn.addEventListener("click", () => {
-      modal.style.display = "flex";
-      music.play();
+/* Mute toggle */
+muteBtn.addEventListener("click", () => {
+  music.muted = !music.muted;
+  muteBtn.textContent = music.muted ? "Unmute 🔇" : "Mute 🔊";
+});
 
-      const end = Date.now() + 2000;
-      (function fireworks() {
-        confetti({ particleCount: 8, spread: 70, origin: { x: Math.random(), y: Math.random() } });
-        if (Date.now() < end) requestAnimationFrame(fireworks);
-      })();
-    });
-
-    muteBtn.addEventListener("click", () => {
-      music.muted = !music.muted;
-      muteBtn.textContent = music.muted ? "Unmute 🔇" : "Mute 🔊";
-    });
-
-    modal.addEventListener("click", e => {
-      if (e.target === modal) modal.style.display = "none";
-    });
-  </script>
+/* Close modal */
+modal.addEventListener("click", e => {
+  if (e.target === modal) modal.style.display = "none";
+});
+</script>
 
 </body>
 </html>
