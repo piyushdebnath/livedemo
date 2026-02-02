@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Will You Be My Valentine?</title>
 
-<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-<!-- Confetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
@@ -30,27 +27,25 @@ body {
 
 /* Card */
 .card {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   padding: 40px;
   width: 360px;
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
   text-align: center;
 }
 
-/* Question */
 .card h1 {
   font-size: 26px;
   color: #2c3e50;
   margin-bottom: 30px;
 }
 
-/* Buttons */
 .buttons {
   position: relative;
-  height: 100px;
 }
 
+/* Buttons */
 button {
   padding: 12px 28px;
   font-size: 16px;
@@ -61,16 +56,19 @@ button {
 }
 
 #yesBtn {
-  background: #2ecc71;
+  background: #27ae60;
   color: white;
+  margin-right: 10px;
 }
 
+/* NO button is FIXED to viewport */
 #noBtn {
-  background: #e74c3c;
+  background: #c0392b;
   color: white;
-  position: absolute;
-  left: 180px;
-  top: 0;
+  position: fixed;
+  left: calc(100% - 280px);
+  top: 55%;
+  transition: left 0.08s linear, top 0.08s linear;
 }
 
 /* Modal */
@@ -96,7 +94,6 @@ button {
   margin-top: 20px;
 }
 
-/* Mute button */
 #muteBtn {
   margin-top: 15px;
   background: #34495e;
@@ -109,21 +106,20 @@ button {
 
 <div class="card">
   <h1>Will you be my Valentine, Pranoti? 💖</h1>
-
   <div class="buttons">
     <button id="yesBtn">Yes 💕</button>
-    <button id="noBtn">No 😜</button>
   </div>
 </div>
 
+<button id="noBtn">No 😜</button>
+
 <!-- Modal -->
 <div class="modal" id="modal">
-  <img src="love.jpg" alt="Love">
+  <img src="love.jpg">
   <h2>You made me the happiest 💘</h2>
   <button id="muteBtn">Mute 🔊</button>
 </div>
 
-<!-- Music -->
 <audio id="music" loop>
   <source src="kal.mp3" type="audio/mpeg">
 </audio>
@@ -135,8 +131,8 @@ const modal = document.getElementById("modal");
 const music = document.getElementById("music");
 const muteBtn = document.getElementById("muteBtn");
 
-const SAFE_DISTANCE = 25;
-const MOVE_DISTANCE = 40;
+const SAFE_DISTANCE = 25;   // cursor distance
+const DODGE_STEP = 25;     // move amount
 
 document.addEventListener("mousemove", (e) => {
   const rect = noBtn.getBoundingClientRect();
@@ -147,19 +143,26 @@ document.addEventListener("mousemove", (e) => {
   const dx = btnX - e.clientX;
   const dy = btnY - e.clientY;
 
-  const distance = Math.sqrt(dx * dx + dy * dy);
+  const distance = Math.hypot(dx, dy);
 
   if (distance < SAFE_DISTANCE) {
     const angle = Math.atan2(dy, dx);
 
-    let newX = btnX + Math.cos(angle) * MOVE_DISTANCE;
-    let newY = btnY + Math.sin(angle) * MOVE_DISTANCE;
+    let newLeft = rect.left + Math.cos(angle) * DODGE_STEP;
+    let newTop  = rect.top  + Math.sin(angle) * DODGE_STEP;
 
-    newX = Math.max(20, Math.min(newX, window.innerWidth - rect.width - 20));
-    newY = Math.max(20, Math.min(newY, window.innerHeight - rect.height - 20));
+    // HARD CLAMP — cannot escape screen
+    newLeft = Math.max(
+      10,
+      Math.min(newLeft, window.innerWidth - rect.width - 10)
+    );
+    newTop = Math.max(
+      10,
+      Math.min(newTop, window.innerHeight - rect.height - 10)
+    );
 
-    noBtn.style.left = newX + "px";
-    noBtn.style.top = newY + "px";
+    noBtn.style.left = newLeft + "px";
+    noBtn.style.top  = newTop  + "px";
   }
 });
 
@@ -169,13 +172,13 @@ yesBtn.addEventListener("click", () => {
   music.play();
 
   const end = Date.now() + 2500;
-  (function fireworks() {
+  (function fire() {
     confetti({
-      particleCount: 7,
+      particleCount: 8,
       spread: 80,
       origin: { x: Math.random(), y: Math.random() }
     });
-    if (Date.now() < end) requestAnimationFrame(fireworks);
+    if (Date.now() < end) requestAnimationFrame(fire);
   })();
 });
 
